@@ -19,8 +19,13 @@ UC-8. Store the Daily Wage along with the Total Wage
 UC-9. Store the Day and the Daily Wage along with the Total Wage
 '
 
+check_attendance() {
+    echo $((RANDOM % 2))
+}
+
 employee_wage() {
-    echo "welcome to $(echo $0 | cut -d '/' -f 2 | cut -d '.' -f 1 | awk -F_ '{print $1 " " $2}') program"
+    isPresent=$(check_attendance)
+    [[ $isPresent -eq 1 ]] && echo "Emp is present" || echo "Emp is absent"
 }
 
 employee_wage
