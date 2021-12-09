@@ -20,19 +20,26 @@
 # '
 
 WAGE_PER_HOUR=20
-FULL_DAY=8
+FULL_DAY_HR=8
+PART_TIME_HR=8
 
 check_attendance() {
-    echo $((RANDOM % 2))
+    echo $((RANDOM % 3))
 }
 daily_wage() {
-    echo $(($WAGE_PER_HOUR * $FULL_DAY))
+    if [[ $1 -eq 1 ]]; then
+        echo $(($WAGE_PER_HOUR * $FULL_DAY_HR))
+    elif [[ $1 -eq 2 ]]; then
+        echo $(($WAGE_PER_HOUR * $PART_TIME_HR))
+    else
+        echo "0"
+    fi
 }
 
 employee_wage() {
     isPresent=$(check_attendance)
-    if [[ $isPresent -eq 1 ]]; then
-        echo -e "Today, Employee earn \$$(daily_wage)"
+    if [[ $isPresent -eq 1 || $isPresent -eq 2 ]]; then
+        echo -e "Today, Employee earn \$$(daily_wage $isPresent)"
     else
         echo -e "Today, Employee is on leave"
     fi
