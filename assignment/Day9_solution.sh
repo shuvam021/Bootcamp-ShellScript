@@ -26,14 +26,20 @@ PART_TIME_HR=8
 check_attendance() {
     echo $((RANDOM % 3))
 }
+
 daily_wage() {
-    if [[ $1 -eq 1 ]]; then
+    case $1 in
+    1)
         echo $(($WAGE_PER_HOUR * $FULL_DAY_HR))
-    elif [[ $1 -eq 2 ]]; then
+        ;;
+    2)
         echo $(($WAGE_PER_HOUR * $PART_TIME_HR))
-    else
+        ;;
+    *)
         echo "0"
-    fi
+        ;;
+
+    esac
 }
 
 employee_wage() {
