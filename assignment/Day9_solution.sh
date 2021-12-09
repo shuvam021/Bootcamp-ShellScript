@@ -22,18 +22,20 @@
 WAGE_PER_HOUR=20
 FULL_DAY_HR=8
 PART_TIME_HR=8
+WORKING_DAY_PER_MONTH=20
 
 check_attendance() {
     echo $((RANDOM % 3))
 }
 
 daily_wage() {
+    perMonth=${2:-1}
     case $1 in
     1)
-        echo $(($WAGE_PER_HOUR * $FULL_DAY_HR))
+        echo $(($WAGE_PER_HOUR * $FULL_DAY_HR * $perMonth))
         ;;
     2)
-        echo $(($WAGE_PER_HOUR * $PART_TIME_HR))
+        echo $(($WAGE_PER_HOUR * $PART_TIME_HR * $perMonth))
         ;;
     *)
         echo "0"
@@ -45,7 +47,8 @@ daily_wage() {
 employee_wage() {
     isPresent=$(check_attendance)
     if [[ $isPresent -eq 1 || $isPresent -eq 2 ]]; then
-        echo -e "Today, Employee earn \$$(daily_wage $isPresent)"
+        echo -e "Today's income is: \$$(daily_wage $isPresent)"
+        echo -e "This month Employee earn \$$(daily_wage $isPresent $WORKING_DAY_PER_MONTH)"
     else
         echo -e "Today, Employee is on leave"
     fi
